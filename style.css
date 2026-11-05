@@ -1,0 +1,540 @@
+/* ============================================================
+   style.css — Estilos globais do Diário de Observações
+   Importado por todas as páginas do projeto
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   IMPORTAÇÃO DE FONTES (Google Fonts)
+   - Raleway: título/display (elegante, levemente geométrica)
+   - Inter: corpo e UI (legível, neutra, ótima para dados)
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ------------------------------------------------------------
+   TOKENS DE DESIGN (variáveis CSS)
+   Definir cores como variáveis permite trocar o tema inteiro
+   mudando apenas este bloco — componentes usam var(--nome)
+   ------------------------------------------------------------ */
+:root {
+    /* Paleta: fundo escuro como céu noturno, acento azul-violeta */
+    --bg:          #0d0f1a;   /* fundo principal — azul-marinho escuro */
+    --bg-surface:  #151829;   /* superfície de cards/tabela */
+    --bg-raised:   #1e2240;   /* elemento elevado (hover, header) */
+    --border:      #2a2f52;   /* bordas sutis */
+
+    --fg:          #e8eaf6;   /* texto principal */
+    --fg-muted:    #8892b0;   /* texto secundário/legendas */
+
+    --accent:      #7c83e0;   /* azul-violeta — cor de destaque */
+    --accent-glow: rgba(124, 131, 224, 0.18); /* brilho do acento para sombras */
+
+    /* Cores semânticas para status do céu */
+    --sky-excellent: #4ade80; /* verde */
+    --sky-good:      #60a5fa; /* azul */
+    --sky-regular:   #fbbf24; /* amarelo */
+    --sky-poor:      #f87171; /* vermelho */
+
+    /* Tipografia */
+    --font-display: 'Raleway', sans-serif;
+    --font-body:    'Inter', sans-serif;
+
+    /* Espaçamentos e bordas arredondadas */
+    --radius-sm:   6px;
+    --radius-md:   12px;
+    --radius-lg:   20px;
+    --gap:         1.5rem;
+}
+
+/* ------------------------------------------------------------
+   RESET E BASE
+   Zera estilos padrão do navegador e define o comportamento base
+   ------------------------------------------------------------ */
+*, *::before, *::after {
+    box-sizing: border-box; /* padding e border incluídos na largura total */
+    margin: 0;
+    padding: 0;
+}
+
+html { font-size: 16px; }
+
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Evita scroll horizontal em telas pequenas */
+    overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Foco visível para acessibilidade via teclado */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+   HEADER / NAVEGAÇÃO
+   ------------------------------------------------------------ */
+.site-header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 var(--gap);
+    position: sticky; /* Fica fixo no topo ao rolar a página */
+    top: 0;
+    z-index: 100;
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    height: 64px;
+}
+
+.site-logo {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.site-logo:hover { text-decoration: none; }
+.site-logo span { color: var(--accent); }
+
+/* Links de navegação */
+.site-nav {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+}
+
+.site-nav a {
+    display: block;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-sm);
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s, background 0.2s;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+    color: var(--fg);
+    background: var(--bg-raised);
+    text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+   LAYOUT PRINCIPAL
+   ------------------------------------------------------------ */
+.page-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem var(--gap);
+}
+
+/* Título de seção de cada página */
+.page-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.page-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.6em;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+/* ------------------------------------------------------------
+   CARDS (caixas com conteúdo)
+   ------------------------------------------------------------ */
+.card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+}
+
+/* ------------------------------------------------------------
+   FORMULÁRIOS
+   ------------------------------------------------------------ */
+.form-grid {
+    display: grid;
+    /* auto-fill: cria colunas automaticamente; mínimo 240px, máximo 1fr */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+}
+
+/* Elemento que ocupa a linha inteira (usado para "notas") */
+.form-full { grid-column: 1 / -1; }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Estilo compartilhado para todos os campos de formulário */
+input, select, textarea {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.65rem 0.85rem;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+    outline: none; /* Substituído pelo box-shadow acima */
+}
+
+textarea { resize: vertical; min-height: 110px; }
+
+/* Estilo para input type="file" */
+input[type="file"] {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* Texto de ajuda abaixo do campo */
+.form-hint {
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-top: 0.25rem;
+}
+
+/* ------------------------------------------------------------
+   BOTÕES
+   ------------------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.1s;
+    text-decoration: none;
+}
+
+.btn:hover { opacity: 0.85; text-decoration: none; }
+.btn:active { transform: scale(0.97); }
+
+/* Variantes de botão */
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.btn-secondary {
+    background: var(--bg-raised);
+    color: var(--fg);
+    border: 1px solid var(--border);
+}
+
+.btn-danger {
+    background: transparent;
+    color: #f87171;
+    border: 1px solid #f87171;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.82rem;
+}
+.btn-danger:hover {
+    background: rgba(248, 113, 113, 0.1);
+    opacity: 1;
+}
+
+.btn-sm { padding: 0.4rem 0.9rem; font-size: 0.82rem; }
+
+/* ------------------------------------------------------------
+   ALERTAS / MENSAGENS DE FEEDBACK
+   ------------------------------------------------------------ */
+.alert {
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.alert-success {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+}
+
+.alert-error {
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    color: #f87171;
+}
+
+/* ------------------------------------------------------------
+   BADGE DE CONDIÇÃO DO CÉU
+   Exibido na tabela de observações
+   ------------------------------------------------------------ */
+.sky-badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px; /* Pílula */
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.sky-badge.excellent { background: rgba(74,222,128,0.15); color: var(--sky-excellent); }
+.sky-badge.good      { background: rgba(96,165,250,0.15); color: var(--sky-good); }
+.sky-badge.regular   { background: rgba(251,191,36,0.15); color: var(--sky-regular); }
+.sky-badge.poor      { background: rgba(248,113,113,0.15); color: var(--sky-poor); }
+
+/* ------------------------------------------------------------
+   TABELA DE OBSERVAÇÕES
+   ------------------------------------------------------------ */
+.table-wrapper {
+    overflow-x: auto; /* Scroll horizontal em telas pequenas */
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaço duplo entre bordas */
+    font-size: 0.88rem;
+}
+
+thead {
+    background: var(--bg-raised);
+}
+
+th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-muted);
+    white-space: nowrap;
+}
+
+td {
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+/* Destaque ao passar o mouse sobre a linha */
+tbody tr:hover { background: var(--bg-raised); }
+
+/* Miniatura da foto na tabela */
+.photo-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover; /* Recorta a imagem para preencher o espaço */
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.photo-thumb:hover { transform: scale(1.1); }
+
+/* Ícone quando não há foto */
+.no-photo {
+    width: 48px;
+    height: 48px;
+    background: var(--bg-raised);
+    border-radius: var(--radius-sm);
+    display: grid;
+    place-items: center;
+    color: var(--fg-muted);
+    font-size: 1.2rem;
+}
+
+/* ------------------------------------------------------------
+   BARRA DE FILTROS (observations.php)
+   ------------------------------------------------------------ */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.filter-bar .form-group { min-width: 180px; flex: 1; }
+.filter-bar label { margin-bottom: 0.3rem; }
+
+/* ------------------------------------------------------------
+   CONTADOR DE RESULTADOS
+   ------------------------------------------------------------ */
+.results-info {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    margin-bottom: 1rem;
+}
+
+.results-info strong { color: var(--accent); }
+
+/* ------------------------------------------------------------
+   MODAL PARA VER A FOTO EM TAMANHO MAIOR
+   ------------------------------------------------------------ */
+.modal-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Cobre a tela inteira */
+    inset: 0;        /* top/right/bottom/left = 0 */
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 999;
+    place-items: center;
+    padding: 2rem;
+}
+
+/* JS adiciona a classe 'open' para exibir o modal */
+.modal-overlay.open { display: grid; }
+
+.modal-img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* ------------------------------------------------------------
+   PÁGINA INICIAL (index.php) — Cards de estatísticas
+   ------------------------------------------------------------ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--gap);
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+}
+
+.stat-card .stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-value {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums; /* Dígitos com mesma largura */
+    line-height: 1;
+}
+
+/* ------------------------------------------------------------
+   LISTA DE ÚLTIMAS OBSERVAÇÕES (index.php)
+   ------------------------------------------------------------ */
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s;
+}
+.recent-item:hover { border-color: var(--accent); }
+
+.recent-item .item-date {
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    white-space: nowrap;
+}
+
+.recent-item .item-object {
+    font-weight: 600;
+    flex: 1;
+    min-width: 0; /* Permite truncar com text-overflow */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVIDADE — telas pequenas (<= 600px)
+   ------------------------------------------------------------ */
+@media (max-width: 600px) {
+    .page-main { padding: 1.5rem 1rem; }
+    .page-title { font-size: 1.4rem; }
+
+    /* Esconde colunas menos importantes na tabela */
+    .table-hide-mobile { display: none; }
+
+    /* Empilha os botões de ação */
+    .filter-bar { flex-direction: column; }
+    .filter-bar .form-group { min-width: 100%; }
+
+    /* Header fica mais compacto */
+    .site-nav a { padding: 0.4rem 0.6rem; font-size: 0.82rem; }
+}
