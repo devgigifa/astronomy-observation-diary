@@ -23,7 +23,7 @@ A full-stack web application for logging personal astronomical observations, bui
 ## Project Structure
 
 ```
-diario-astronomico/
+astronomy-observation-diary/
 ├── index.php              # Dashboard
 ├── new-observation.php    # Observation form
 ├── observations.php       # Filterable list with AJAX table

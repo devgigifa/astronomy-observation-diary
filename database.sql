@@ -3,6 +3,8 @@
 -- Projeto: Diário de Observações Astronômicas
 -- ============================================================
 
+SET NAMES utf8mb4;
+
 -- Cria o banco de dados caso ele ainda não exista
 CREATE DATABASE IF NOT EXISTS astronomy_diary
     CHARACTER SET utf8mb4       -- Suporte a caracteres especiais e emojis

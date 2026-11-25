@@ -55,7 +55,7 @@
     padding: 0;
 }
 
-html { font-size: 16px; }
+html { font-size: 20px; }
 
 body {
     background-color: var(--bg);
@@ -94,13 +94,14 @@ a:hover { text-decoration: underline; }
 }
 
 .header-inner {
-    max-width: 1100px;
+    max-width: 95%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--gap);
-    height: 64px;
+    height: 70px;
 }
 
 .site-logo {
@@ -143,9 +144,10 @@ a:hover { text-decoration: underline; }
    LAYOUT PRINCIPAL
    ------------------------------------------------------------ */
 .page-main {
-    max-width: 1100px;
+    max-width: 95%;
+    width: 100%;
     margin: 0 auto;
-    padding: 2.5rem var(--gap);
+    padding: 3rem var(--gap);
 }
 
 /* Título de seção de cada página */
@@ -456,7 +458,7 @@ tbody tr:hover { background: var(--bg-raised); }
    ------------------------------------------------------------ */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: var(--gap);
     margin-bottom: 2.5rem;
 }

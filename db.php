@@ -6,10 +6,10 @@
 // ============================================================
 
 // Configurações de conexão — ajuste conforme seu ambiente
-define('DB_HOST', 'localhost');   // Endereço do servidor MySQL (geralmente localhost no XAMPP)
-define('DB_NAME', 'astronomy_diary'); // Nome do banco criado no database.sql
-define('DB_USER', 'root');        // Usuário do MySQL (padrão do XAMPP é 'root')
-define('DB_PASS', '');            // Senha do MySQL (padrão do XAMPP é vazia)
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');   // Endereço do servidor MySQL
+define('DB_NAME', getenv('DB_NAME') ?: 'astronomy_diary'); // Nome do banco criado no database.sql
+define('DB_USER', getenv('DB_USER') ?: 'root');        // Usuário do MySQL
+define('DB_PASS', getenv('DB_PASS') ?: '');            // Senha do MySQL
 define('DB_CHARSET', 'utf8mb4'); // Mesmo charset definido no banco
 
 // DSN = Data Source Name: string que identifica o banco para o PDO
@@ -35,11 +35,11 @@ try {
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
 
 } catch (PDOException $e) {
-    // Se a conexão falhar, interrompe o script e exibe uma mensagem amigável
-    // Em produção, você nunca mostraria $e->getMessage() para o usuário final!
+    // Registra o erro detalhado nos logs do servidor sem expor ao usuário final
+    error_log('Erro de conexão com o banco de dados: ' . $e->getMessage());
     http_response_code(500);
     die(json_encode([
         'success' => false,
-        'message' => 'Erro de conexão com o banco de dados: ' . $e->getMessage()
+        'message' => 'Erro interno ao conectar com o banco de dados.'
     ]));
 }

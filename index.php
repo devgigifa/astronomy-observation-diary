@@ -18,7 +18,7 @@ $unique_objects = $pdo->query("SELECT COUNT(DISTINCT object_name) FROM observati
 $stmt = $pdo->query("
     SELECT DATE_FORMAT(obs_date, '%M %Y') AS month_label, COUNT(*) AS qty
     FROM observations
-    GROUP BY DATE_FORMAT(obs_date, '%Y-%m')
+    GROUP BY DATE_FORMAT(obs_date, '%Y-%m'), DATE_FORMAT(obs_date, '%M %Y')
     ORDER BY qty DESC
     LIMIT 1
 ");
@@ -38,8 +38,8 @@ $recent = $pdo->query("
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astronomy Diary — Dashboard</title>
-    <!-- Linka o arquivo CSS externo -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Linka o arquivo CSS externo (com cache busting para refletir alterações na hora) -->
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
 </head>
 <body>
 

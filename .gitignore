@@ -1,0 +1,16 @@
+# Uploads de usuários (mantém a pasta no repositório, ignora arquivos enviados)
+uploads/*
+!uploads/.gitkeep
+
+# Variáveis de ambiente e configurações locais
+.env
+.env.*
+
+# Logs
+*.log
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
