@@ -41,11 +41,11 @@ astronomy-observation-diary/
 
 **Requirements:** XAMPP (or any Apache + PHP 8 + MySQL stack)
 
-1. Clone or extract the project into `htdocs/diario-astronomico/`
+1. Clone or extract the project into `htdocs/astronomy-observation-diary/`
 2. Start **Apache** and **MySQL** in the XAMPP Control Panel
 3. Open `http://localhost/phpmyadmin`, create a database named `astronomy_diary`
 4. Import `database.sql` — this creates the table and loads 3 sample observations
-5. Open `http://localhost/diario-astronomico/`
+5. Open `http://localhost/astronomy-observation-diary/`
 
 > If your MySQL credentials differ from the XAMPP defaults, update `DB_USER` and `DB_PASS` in `db.php`.
 
